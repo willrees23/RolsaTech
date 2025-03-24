@@ -21,7 +21,7 @@ def landing():
     user: User = session.get("user")
     if user:
         return user.username
-    return "Landing page"
+    return render_template("landing.html")
 
 @app.route("/logout")
 def logout():

@@ -3,9 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/main.css" rel="stylesheet">
+    <link href="/static/font.css" rel="stylesheet">
     <title>Rolsa Tech - {% block title %} {% endblock %}</title>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="left">
+            <a href="/">
+                <span class="logo">
+                    RTech
+                </span>
+            </a>
+            <a>
+                Information
+            </a>
+            <a>
+                Services
+            </a>
+            <a>
+                Calculators
+            </a>
+        </div>
+        <div class="right">
+            <a>
+                +44 1234 567890
+            </a>
+            <a href="/register">
+                <button>
+                    REGISTER
+                </button>
+            </a>
+        </div>
+    </nav>
     {% block body %} {% endblock %}
 </body>
 </html>
