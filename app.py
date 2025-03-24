@@ -1,5 +1,8 @@
 from flask import Flask
+import time
+
 from data import db
+from data.models import Booking, BookingType, User
 
 app = Flask(__name__)
 
