@@ -19,8 +19,9 @@ db.setup()
 @app.route("/")
 def landing():
     user: User = session.get("user")
-    if user:
-        return user.username
+    if user != None:
+        print(user.username)
+        return render_template("landing.html", user=user)
     return render_template("landing.html")
 
 @app.route("/logout")

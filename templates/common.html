@@ -29,11 +29,19 @@
             <a>
                 +44 1234 567890
             </a>
+            {% if user %}
+            <a href="/account">
+                <button>
+                    {{ user.username }}
+                </button>
+            </a>
+            {% else %}
             <a href="/register">
                 <button>
                     REGISTER
                 </button>
             </a>
+            {% endif %}
         </div>
     </nav>
     {% block body %} {% endblock %}

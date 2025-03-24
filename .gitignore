@@ -1,3 +1,4 @@
 data/__pycache__
 data/data.db
 __pycache__
+flask_session
