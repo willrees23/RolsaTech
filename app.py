@@ -20,7 +20,6 @@ db.setup()
 def landing():
     user: User = session.get("user")
     if user != None:
-        print(user.username)
         return render_template("landing.html", user=user)
     return render_template("landing.html")
 
