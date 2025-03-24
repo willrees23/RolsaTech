@@ -1,0 +1,12 @@
+{% extends "common.html" %}
+{% block title %} Login {% endblock %}
+{% block body %}
+<h1>
+    This is the login page.
+</h1>
+<form method="post">
+    <input placeholder="Email/username..." name="emailusername">
+    <input placeholder="Password..." type="password" name="password">
+    <button >Submit</button>
+</form>
+{% endblock %}

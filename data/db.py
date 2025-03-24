@@ -46,6 +46,16 @@ def create_user(email: str, username: str, password: str) -> User:
     id = db.cursor().lastrowid
     return User(id, email, username, password, "")
 
+def is_email_taken(email: str) -> bool:
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM 'users' WHERE email = ?", (email,))
+    return cursor.fetchone() != None
+
+def is_username_taken(username: str) -> bool:
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM 'users' WHERE username = ?", (username,))
+    return cursor.fetchone() != None
+
 # Retreives a user from the database using the ID
 def get_user_by_id(id: int):
     cursor = db.cursor()
