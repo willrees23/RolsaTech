@@ -1,0 +1,14 @@
+{% extends "common.html" %}
+{% block title %} Register {% endblock %}
+{% block body %}
+<h1>
+    This is the register page.
+</h1>
+<form method="post">
+    <input placeholder="Email address..." name="email">
+    <input placeholder="Username..." name="username">
+    <input placeholder="Password..." type="password" name="password">
+    <input placeholder="Confirm password..." type="password" name="confirm_password">
+    <button >Submit</button>
+</form>
+{% endblock %}
