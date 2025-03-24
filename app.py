@@ -1,6 +1,9 @@
 from flask import Flask
+from data import db
 
 app = Flask(__name__)
+
+db.setup()
 
 @app.route("/")
 def landing():
