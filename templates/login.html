@@ -1,12 +1,25 @@
 {% extends "common.html" %}
 {% block title %} Login {% endblock %}
 {% block body %}
-<h1>
-    This is the login page.
-</h1>
-<form method="post">
-    <input placeholder="Email/username..." name="emailusername">
-    <input placeholder="Password..." type="password" name="password">
-    <button >Submit</button>
-</form>
+<div class="form">
+    <span class="title">
+        Login to your account
+        </span>
+    <span class="subtitle">
+    Don't have an account? <a class="underline" href="/register">Register here</a></span>
+    <form method="post">
+        <label>
+            Email/Username
+        </label>
+        <input placeholder="Email/username..." name="emailusername">
+        <label>
+            Password
+        </label>
+        <input placeholder="Password..." type="password" name="password">
+        <span>
+            Forgot your password? <a class="underline" href="/reset-password">Reset it here</a>
+        </span>
+        <button>SUBMIT</button>
+    </form>
+</div>
 {% endblock %}

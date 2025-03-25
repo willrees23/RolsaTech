@@ -63,7 +63,7 @@ def get_user_by_id(id: int):
     row = cursor.fetchone()
     return User(*row)
 
-# Retreives a user f rom the database using either the username or email.
+# Retreives a user from the database using either the username or email.
 # First tries to get via email, if it fails, it will try using the username.
 def get_user_by_emailusername(emailusername: str):
     try:
@@ -75,9 +75,10 @@ def get_user_by_emailusername(emailusername: str):
     
     try:
         by_username = get_user_by_username(emailusername)
+        return by_username
     except:
         pass
-    return by_username
+    return None
 
 # Retreives a user from the database using the email.
 def get_user_by_email(email: str):

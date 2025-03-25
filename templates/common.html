@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/main.css" rel="stylesheet">
     <link href="/static/font.css" rel="stylesheet">
+    <script src="/static/form-submit.js"></script>
     <title>Rolsa Tech - {% block title %} {% endblock %}</title>
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="left">
             <a href="/">
                 <span class="logo">
@@ -44,6 +45,23 @@
             {% endif %}
         </div>
     </nav>
-    {% block body %} {% endblock %}
+    {% if error %}
+    <div id="messages">
+        <div class="card">
+            <img src="/static/x.svg" height="25" width="25">
+            <div>
+                <span>
+                    Something went wrong...
+                </span>
+                <span>
+                    {{ error }}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div id="body">
+        {% block body %} {% endblock %}
+    </div>
 </body>
 </html>

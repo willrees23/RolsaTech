@@ -1,3 +1,14 @@
+/* 100px is the padding on the X for regular content */
+/* #456C39 is the background colour for buttons */
+/* #164707 is the text colour */
+
+:root {
+    --card-green: #C1DEB8;
+    --bg-green: #456C39;
+    --text-primary: #164707;
+    --error: #d34141;
+    --input: #DEFFD3;
+}
 
 body {
     margin: 0;
@@ -6,15 +17,102 @@ body {
 }
 
 a {
-    color:#164707;
+    color: var(--text-primary);
     text-decoration: none;
 }
+
+#body {
+    padding: 0px 100px;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+
+/* FORMS */
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-primary);
+    gap: 10px;
+}
+
+.form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form form * {
+    font-size: 16px;
+    min-width: 250px;
+}
+
+input {
+    border: none;
+    border-radius: 15px;
+    padding: 13px 16px;
+    background-color: var(--input);
+    color: var(--text-primary);
+}
+
+input:disabled {
+    color: var(--card-green);
+}
+
+.form form input::placeholder {
+    color: var(--text-primary);
+    opacity: 60%;
+}
+
+.form span.title {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.form span.subtitle {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+
+/* MESSAGES (ERROR, ETC) */
+#messages {
+    display: flex;
+    padding: 0px 100px;
+}
+
+#messages .card {
+    display: flex;
+    background-color: var(--card-green);
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-primary)
+}
+
+#messages .card div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+#messages .card div span:nth-child(2) {
+    font-size: 18px;
+}
+
+
+/* BUTTON */
 
 button {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
     font-size: 20px;
-    background: #456C39;
+    background: var(--bg-green);
     color: white;
     border: none;
     padding: 8px 25px;
@@ -31,12 +129,16 @@ button:active {
     scale: 95%;
 }
 
+
+
+/* NAVBAR */
+
 nav.navbar {
     padding: 20px 100px;
     display: flex;
     justify-content: space-between;
     font-size: 20px;
-    color: #164707;
+    color: var(--text-primary);
 }
 
 nav.navbar .left .logo {
