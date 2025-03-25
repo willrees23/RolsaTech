@@ -1,6 +1,8 @@
-/* 100px is the padding on the X for regular content */
+/* 100px -> default padding for half size */
+/* 200px -> default padding for full size */
 /* #456C39 is the background colour for buttons */
 /* #164707 is the text colour */
+/* Symbols found at https://css.gg/ */
 
 :root {
     --card-green: #C1DEB8;
@@ -8,6 +10,29 @@
     --text-primary: #164707;
     --error: #d34141;
     --input: #DEFFD3;
+    --off-white: #F7FFF4;
+
+    --padding: 50px;
+    --hero-title: 50px;
+    --hero-subtitle: 30px;
+}
+
+@media (min-width: 1000px) {
+    :root {
+        --hero-title: 80px;
+    }
+}
+
+@media (min-width: 1500px) {
+    :root {
+        --padding: 200px;
+    }
+}
+
+@media (min-width: 2100px) {
+    :root {
+        --padding: 300px;
+    }
 }
 
 body {
@@ -22,11 +47,42 @@ a {
 }
 
 #body {
-    padding: 0px 100px;
+    padding: 0px var(--padding)
 }
 
 .underline {
     text-decoration: underline;
+}
+
+.hero {
+    position: relative;
+    max-height: 500px;
+    overflow: hidden;
+    border-radius: 0px 0px 30px 30px;
+}
+
+.hero-image {
+    max-width: 100vw;
+    border-radius: 0px 0px 30px 30px;
+}
+
+/* Selects all DIV children of .hero */
+.hero div>div {
+    position: absolute;
+    padding: 0px var(--padding);
+    color: var(--off-white);
+    font-weight: 500;
+    opacity: 80%;
+}
+
+.hero-title {
+    top: 20%;
+    font-size: var(--hero-title)
+}
+
+.hero-subtitle {
+    top: 40%;
+    font-size: var(--hero-subtitle)
 }
 
 
@@ -134,7 +190,7 @@ button:active {
 /* NAVBAR */
 
 nav.navbar {
-    padding: 20px 100px;
+    padding: 20px var(--padding);
     display: flex;
     justify-content: space-between;
     font-size: 20px;
