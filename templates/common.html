@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="/static/form-submit.js"></script>
     <title>Rolsa Tech - {% block title %} {% endblock %}</title>
 </head>
+
 <body>
     <nav class="navbar" id="navbar">
         <div class="left">
@@ -16,15 +18,31 @@
                     RTech
                 </span>
             </a>
-            <a>
-                Information
-            </a>
-            <a>
-                Services
-            </a>
-            <a>
-                Calculators
-            </a>
+            <div class="dropdown">
+                <span class="dropdown-label">Information
+                    <img src="/static/chevron-down.svg">
+                </span>
+                <div class="dropdown-content">
+                    <a href="/information/about-green-energy">About green energy</a>
+                    <a href="/information/green-energy-products">Green energy products</a>
+                    <a href="/infomration/reducing-carbon-footprint">Reducing your carbon footprint</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <span class="dropdown-label">Services<img src="/static/chevron-down.svg"></span>
+                <div class="dropdown-content">
+                    <a href="/services/consultations">Consultations</a>
+                    <a href="/services/installations">Installations</a>
+                    <a href="/services/book">Book a service</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <span class="dropdown-label">Calculators<img src="/static/chevron-down.svg"></span>
+                <div class="dropdown-content">
+                    <a href="/calculators/footprint">Carbon footprint</a>
+                    <a href="/calculators/energy-usage">Energy usage</a>
+                </div>
+            </div>
         </div>
         <div class="right">
             <a>
@@ -66,4 +84,5 @@
         {% block body %} {% endblock %}
     </div>
 </body>
+
 </html>
