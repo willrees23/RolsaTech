@@ -63,6 +63,19 @@
             {% endif %}
         </div>
     </nav>
+    <div id="banner" class="banner">
+        <span>
+            Rolsa Technologies
+        </span>
+        <span>
+            Making your home greener
+        </span>
+        <span>
+            Get in contact today
+        </span>
+    </div>
+    {% block no_pad %}
+    {% endblock %}
     {% if error %}
     <div id="messages">
         <div class="card">
@@ -78,10 +91,35 @@
         </div>
     </div>
     {% endif %}
-    {% block no_pad %}
-    {% endblock %}
     <div id="body">
         {% block body %} {% endblock %}
+    </div>
+    <div class="footer" id="footer">
+        <div class="top-info">
+            <div class="about">
+                <span>ROLSA TECHNOLOGIES</span>
+                <span>Providing you with greener energy.</span>
+            </div>
+            <div class="contact">
+                <span>962 Main Street, DORCHESTER, DT81 9JL</span>
+                <span>+44 7866 679445</span>
+            </div>
+        </div>
+        <div class="links">
+            <a href="/">
+                HOME
+            </a>
+            <a href="/information">
+                INFORMATION
+            </a>
+            <a href="/services">
+                SERVICES
+            </a>
+            <a href="/calculators">
+                CALCULATORS
+            </a>
+            
+        </div>
     </div>
 </body>
 
