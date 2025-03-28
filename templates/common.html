@@ -4,48 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/main.css" rel="stylesheet">
-    <link href="/static/font.css" rel="stylesheet">
-    <script src="/static/form-submit.js"></script>
+    <link href="/static/styles/main.css" rel="stylesheet">
+    <link href="/static/styles/font.css" rel="stylesheet">
+    <script src="/static/scripts/form-submit.js"></script>
     <title>Rolsa Tech - {% block title %} {% endblock %}</title>
 </head>
 
 <body>
     <nav class="navbar" id="navbar">
+        <a href="/" class="logo">
+            <span>
+                RTech
+            </span>
+        </a>
         <div class="left">
-            <a href="/">
-                <span class="logo">
-                    RTech
-                </span>
-            </a>
-            <div class="dropdown">
-                <span class="dropdown-label">Information
-                    <img src="/static/chevron-down.svg">
-                </span>
-                <div class="dropdown-content">
-                    <a href="/information/about-green-energy">About green energy</a>
-                    <a href="/information/green-energy-products">Green energy products</a>
-                    <a href="/infomration/reducing-carbon-footprint">Reducing your carbon footprint</a>
+            <div class="mobile">
+                <div class="dropdown">
+                    <span class="dropdown-label">
+                        Explore
+                        <img src="/static/chevron-down.svg">
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="/information/about-green-energy">About green energy</a>
+                        <a href="/information/green-energy-products">Green energy products</a>
+                        <a href="/infomration/reducing-carbon-footprint">Reducing your carbon footprint</a>
+
+                        <a href="/services/consultations">Consultations</a>
+                        <a href="/services/installations">Installations</a>
+                        <a href="/services/book">Book a service</a>
+
+                        <a href="/calculators/footprint">Carbon footprint</a>
+                        <a href="/calculators/energy-usage">Energy usage</a>
+                    </div>
                 </div>
             </div>
-            <div class="dropdown">
-                <span class="dropdown-label">Services<img src="/static/chevron-down.svg"></span>
-                <div class="dropdown-content">
-                    <a href="/services/consultations">Consultations</a>
-                    <a href="/services/installations">Installations</a>
-                    <a href="/services/book">Book a service</a>
+            <div class="other">
+                <div class="dropdown">
+                    <span class="dropdown-label">Information
+                        <img src="/static/chevron-down.svg">
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="/information/about-green-energy">About green energy</a>
+                        <a href="/information/green-energy-products">Green energy products</a>
+                        <a href="/infomration/reducing-carbon-footprint">Reducing your carbon footprint</a>
+                    </div>
                 </div>
-            </div>
-            <div class="dropdown">
-                <span class="dropdown-label">Calculators<img src="/static/chevron-down.svg"></span>
-                <div class="dropdown-content">
-                    <a href="/calculators/footprint">Carbon footprint</a>
-                    <a href="/calculators/energy-usage">Energy usage</a>
+                <div class="dropdown">
+                    <span class="dropdown-label">Services<img src="/static/chevron-down.svg"></span>
+                    <div class="dropdown-content">
+                        <a href="/services/consultations">Consultations</a>
+                        <a href="/services/installations">Installations</a>
+                        <a href="/services/book">Book a service</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <span class="dropdown-label">Calculators<img src="/static/chevron-down.svg"></span>
+                    <div class="dropdown-content">
+                        <a href="/calculators/footprint">Carbon footprint</a>
+                        <a href="/calculators/energy-usage">Energy usage</a>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="right">
-            <a>
+            <a id="number">
                 +44 1234 567890
             </a>
             {% if user %}
@@ -67,7 +89,7 @@
         <span>
             Rolsa Technologies
         </span>
-        <span>
+        <span id="middle">
             Making your home greener
         </span>
         <span>
