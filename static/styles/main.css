@@ -99,12 +99,12 @@ section.bg-green {
 
 .hero-title {
     top: 20%;
-    font-size: calc(var(--hero-title) - 15px)
+    font-size: calc(var(--hero-title) - 25px)
 }
 
 .hero-subtitle {
     top: 40%;
-    font-size: calc(var(--hero-subtitle) - 10px)
+    font-size: calc(var(--hero-subtitle) - 15px)
 }
 
 @media (min-width: 600px) {
