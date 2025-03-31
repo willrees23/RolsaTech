@@ -320,6 +320,31 @@ input:disabled {
     min-height: max-content;
 }
 
+.card.card-image {
+    padding: 0;
+    max-width: 300px;
+}
+
+@media (min-width: 500px) {
+    .card.card-image {
+        max-width: 500px;
+    }
+}
+
+.card.card-image img {
+    width: auto;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+}
+
+.card.card-image .card-info {
+    padding: 10px 15px;
+}
+
+.card.card-image .card-action {
+    padding: 10px 15px;
+}
+
 .card.transparent {
     filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
     transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
@@ -337,11 +362,6 @@ input:disabled {
     margin-top: auto;
     font-size: 18px;
 }
-
-.card-info {
-    margin-bottom: 15px;
-}
-
 
 
 
