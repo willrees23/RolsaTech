@@ -9,6 +9,7 @@
     --bg-green: #456C39;
     --text-primary: #164707;
     --error: #d34141;
+    --error-transparent: #d34141e0;
     --input: #DEFFD3;
     --off-white: #F7FFF4;
 
@@ -247,7 +248,9 @@ input:disabled {
 /* MESSAGES (ERROR, ETC) */
 #messages {
     display: flex;
-    padding: 0px 100px;
+    justify-content: center;
+    padding: 30px 100px;
+    margin-bottom: 20px;
 }
 
 #messages .card {
@@ -309,6 +312,12 @@ input:disabled {
 
 .card-large {
     max-width: 700px !important;
+}
+
+.card-error {
+    background-color: var(--error-transparent) !important;
+    color: white !important;
+    font-weight: 400 !important;
 }
 
 .card-large.card-image img {
