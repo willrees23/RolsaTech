@@ -249,8 +249,7 @@ input:disabled {
 #messages {
     display: flex;
     justify-content: center;
-    padding: 30px 100px;
-    margin-bottom: 20px;
+    padding: 20px 0px 30px 0px;
 }
 
 #messages .card {
