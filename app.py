@@ -19,9 +19,9 @@ db.setup()
 @app.route("/")
 def landing():
     user: User = session.get("user")
-    if user:
-        return user.username
-    return "Landing page"
+    if user != None:
+        return render_template("landing.html", user=user)
+    return render_template("landing.html")
 
 @app.route("/logout")
 def logout():
@@ -37,10 +37,11 @@ def login():
         emailusername = form.get("emailusername")
         password = form.get("password")
         user = db.get_user_by_emailusername(emailusername)
+        error = "Email/username or password was incorrect."
         if user == None:
-            print("Invalid credentials")
+            return render_template("login.html", error=error)
         elif not security.check(user.password, password):
-            print("Invalid credentials")
+            return render_template("login.html", error=error)
         else:
             session["user"] = user
             print("Logged in!") 
@@ -56,11 +57,14 @@ def register():
         password = security.hash(form.get("password"))
         confirm = form.get("confirm_password")
         if not security.check(password, confirm):
-            print("Passwords do not match")
+            error = "Passwords do not match."
+            return render_template("register.html", error=error)
         elif db.is_email_taken(email):
-            print("Email is taken")
+            error = "Email is already in use."
+            return render_template("register.html", error=error)
         elif db.is_username_taken(username):
-            print("Username is taken")
+            error = "Username is already in use."
+            return render_template("register.html", error=error)
         else:
             # we've completed the proper checks, we can register the account
             db.create_user(email, username, password)

@@ -1,0 +1,103 @@
+{% extends "common.html" %}
+{% block title %}Welcome{%endblock%}
+
+{% block no_pad %}
+<div id="hero" class="hero">
+    <img class="hero-image" src="/static/images/grass.jpg">
+    <div>
+        <div class="hero-title">Rolsa Technologies</div>
+        <div class="hero-subtitle">Let's make your home greener, together.</div>
+    </div>
+</div>
+{% endblock %}
+{% block body %}
+<section id="services">
+    <div class="card-container" id="services">
+        <div class="card card-large card-image transparent">
+            <div class="card-subtitle">
+                CONSULTATION SERVICE
+            </div>
+            <div class="card-info">
+                <div class="card-title">
+                    Make your home GREENER.
+                </div>
+                <div class="card-description">
+                    Book a 1-on-1 consultation with one of our representatives to learn more about green energy.
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="small">BOOK NOW</button>
+            </div>
+            <img src="/static/images/consultation.jpg">
+            
+        </div>
+        <div class="card card-large card-image transparent">
+            <div class="card-subtitle">
+                INSTALLATION SERVICE
+            </div>
+            <div class="card-info">
+                <div class="card-title">
+                    Let us get you setup.
+                </div>
+                <div class="card-description">
+                    Schedule for one of our engineers to install new, fancy green energy technology for you.
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="small">BOOK NOW</button>
+            </div>
+            <img src="/static/images/installation 2.jpg">
+            
+        </div>
+    </div>
+</section>
+<section id="information" class="bg-green">
+    <span class="center">
+        Want to learn about green energy?
+    </span>
+    <div class="card-container" style="margin-top: 35px; margin-bottom: 15px;">
+        <div class="card card-image transparent">
+            <img src="/static/images/turbines 3.jpg">
+            <div class="card-info">
+                <div class="card-title">
+                    About green energy
+                </div>
+                <div class="card-description">
+                    Learn more about the ins and outs of green energy.
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="small">Learn more!</button>
+            </div>
+        </div>
+        <div class="card card-image transparent">
+            <img src="/static/images/panels.jpg">
+            <div class="card-info">
+                <div class="card-title">
+                    Green energy products
+                </div>
+                <div class="card-description">
+                    Discover products on the market & new technology.
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="small">Discover!</button>
+            </div>
+        </div>
+        <div class="card card-image transparent">
+            <img src="/static/images/carbon 1.jpg">
+            <div class="card-info">
+                <div class="card-title">
+                    Reducing carbon footprints
+                </div>
+                <div class="card-description">
+                    Find out how you can reduce your carbon footprint.
+                </div>
+            </div>
+            <div class="card-action">
+                <button class="small">Find out!</button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

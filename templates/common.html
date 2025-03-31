@@ -1,11 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/styles/main.css" rel="stylesheet">
+    <link href="/static/styles/font.css" rel="stylesheet">
+    <script src="/static/scripts/form-submit.js"></script>
     <title>Rolsa Tech - {% block title %} {% endblock %}</title>
 </head>
+
 <body>
-    {% block body %} {% endblock %}
+    <nav class="navbar" id="navbar">
+        <a href="/" class="logo">
+            <span>
+                RTech
+            </span>
+        </a>
+        <div class="left">
+            <div class="mobile">
+                <div class="dropdown" tabindex="-1">
+                    <span class="dropdown-label">
+                        <img src="/static/menu.svg">
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="/information/about-green-energy">About green energy</a>
+                        <a href="/information/green-energy-products">Green energy products</a>
+                        <a href="/infomration/reducing-carbon-footprint">Reducing your carbon footprint</a>
+
+                        <a href="/services/consultations">Consultations</a>
+                        <a href="/services/installations">Installations</a>
+                        <a href="/services/book">Book a service</a>
+
+                        <a href="/calculators/footprint">Carbon footprint</a>
+                        <a href="/calculators/energy-usage">Energy usage</a>
+                    </div>
+                </div>
+            </div>
+            <div class="other">
+                <div class="dropdown">
+                    <span class="dropdown-label">Information
+                        <img src="/static/chevron-down.svg">
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="/information/about-green-energy">About green energy</a>
+                        <a href="/information/green-energy-products">Green energy products</a>
+                        <a href="/infomration/reducing-carbon-footprint">Reducing your carbon footprint</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <span class="dropdown-label">Services<img src="/static/chevron-down.svg"></span>
+                    <div class="dropdown-content">
+                        <a href="/services/consultations">Consultations</a>
+                        <a href="/services/installations">Installations</a>
+                        <a href="/services/book">Book a service</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <span class="dropdown-label">Calculators<img src="/static/chevron-down.svg"></span>
+                    <div class="dropdown-content">
+                        <a href="/calculators/footprint">Carbon footprint</a>
+                        <a href="/calculators/energy-usage">Energy usage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <a id="number">
+                +44 1234 567890
+            </a>
+            {% if user %}
+            <a href="/account">
+                <button>
+                    {{ user.username }}
+                </button>
+            </a>
+            {% else %}
+            <a href="/register">
+                <button>
+                    REGISTER
+                </button>
+            </a>
+            {% endif %}
+        </div>
+    </nav>
+    <div id="banner" class="banner">
+        <span>
+            Rolsa Technologies
+        </span>
+        <span id="middle">
+            Making your home greener
+        </span>
+        <span>
+            Get in contact today
+        </span>
+    </div>
+    {% block no_pad %}
+    {% endblock %}
+    {% if error %}
+    <div id="messages">
+        <div class="card card-error">
+            <div>
+                <span>
+                    Something went wrong...
+                </span>
+                <span>
+                    {{ error }}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div id="body">
+        {% block body %} {% endblock %}
+    </div>
+    <div class="footer" id="footer">
+        <div class="top-info">
+            <div class="about">
+                <span>ROLSA TECHNOLOGIES</span>
+                <span>Providing you with greener energy.</span>
+            </div>
+            <div class="contact">
+                <span>962 Main Street, DORCHESTER, DT81 9JL</span>
+                <span>+44 7866 679445</span>
+            </div>
+        </div>
+        <div class="links">
+            <a href="/">
+                HOME
+            </a>
+            <a href="/information">
+                INFORMATION
+            </a>
+            <a href="/services">
+                SERVICES
+            </a>
+            <a href="/calculators">
+                CALCULATORS
+            </a>
+        </div>
+    </div>
 </body>
+
 </html>
