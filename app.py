@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, flash
 from flask_session import Session
 import time
 
@@ -50,15 +50,14 @@ def login():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        # user just submitted the form
         form = request.form
         email = form.get("email")
         username = form.get("username")
-        confirm = form.get("confirm_password")
-        if not username or not email or not form.get("password") or not confirm:
+        confirm = form.get("confirm")
+        if email == "" or username == "" or confirm == "" or form.get("password") == "":
             error = "All fields are required."
             return render_template("register.html", error=error)
-        password = security.hash(form.get("password"))
+        password = security.hash(request.form.get("password"))
         if not security.check(password, confirm):
             error = "Passwords do not match."
             return render_template("register.html", error=error)
@@ -70,9 +69,12 @@ def register():
             return render_template("register.html", error=error)
         else:
             # we've completed the proper checks, we can register the account
-            db.create_user(email, username, password)
-        
-    return render_template("register.html")
+            user = db.create_user(email, username, password)
+            flash("You have been automatically logged in.")
+            session["user"] = user
+            return redirect("/")
+    else:
+        return render_template("register.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
