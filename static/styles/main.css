@@ -57,6 +57,11 @@ a {
     text-decoration: none;
 }
 
+span.center {
+    text-align: center;
+    display: block;
+}
+
 .underline {
     text-decoration: underline;
 }
@@ -127,7 +132,7 @@ section.bg-green {
 }
 
 .footer .links {
-    display: flex;
+    display: none;
     justify-content: space-between;
 }
 
@@ -158,7 +163,11 @@ section.bg-green {
     align-items: end;
 }
 
-
+@media (min-width: 450px) {
+    .footer .links {
+        display: flex;
+    }
+}
 
 /* BANNER */
 
@@ -179,6 +188,10 @@ section.bg-green {
     .banner #middle {
         display: block;
     }
+}
+
+.banner span:last-of-type {
+    text-align: right;
 }
 
 
@@ -304,6 +317,7 @@ input:disabled {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-height: max-content;
 }
 
 .card.transparent {
@@ -445,10 +459,6 @@ nav.navbar .right a#number {
     vertical-align: middle;
 }
 
-.dropdown:hover .dropdown-label {
-    padding-bottom: 20px;
-}
-
 @keyframes dropdown-animate {
     from {
         opacity: 0%;
@@ -475,11 +485,15 @@ nav.navbar .right a#number {
     transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.dropdown:hover > .dropdown-label img {
+.dropdown:is(:hover, :focus, :active) .dropdown-label {
+    padding-bottom: 20px;
+}
+
+.dropdown:is(:hover, :focus, :active) > .dropdown-label img {
     rotate: 180deg;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:is(:hover, :focus, :active) .dropdown-content {
     display: flex;
     animation-name: dropdown-animate;
     animation-duration: .3s;
