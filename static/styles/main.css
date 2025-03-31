@@ -325,6 +325,11 @@ input:disabled {
     max-width: 300px;
 }
 
+.card.card-image img:hover {
+    scale: 102%;
+    border-radius: 20px;
+}
+
 @media (min-width: 500px) {
     .card.card-image {
         max-width: 500px;
@@ -335,6 +340,7 @@ input:disabled {
     width: auto;
     overflow: hidden;
     border-radius: 20px 20px 0 0;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .card.card-image .card-info {
@@ -499,6 +505,15 @@ nav.navbar .right a#number {
     font-size: 16px;
     top: 35px;
     filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
+}
+.dropdown-content a {
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.dropdown-content a:hover {
+    background-color: #ebebeb;
+    border-radius: 10px;
+    padding: 3px 10px;
 }
 
 .dropdown-label img {
