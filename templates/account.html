@@ -48,9 +48,26 @@
             ACCOUNT DETAILS
         </div>
         <div class="tab-content">
-            <span>
+            <p>
                 View below the details that are associated with your account.
-            </span>
+            </p>
+            <div class="account-details">
+                <label>
+                    Email Address
+                </label>
+                <input value="{{ user.email }}" disabled>
+                <label>
+                    Username
+                </label>
+                <input value="{{ user.username }}" disabled>
+                <label>
+                    Password
+                </label>
+                <input value="Nope.............." disabled type="password">
+                <span>
+                    Need to reset? <a class="underline" href="/reset-password">Reset password</a>
+                </span>
+            </div>
         </div>
         {% elif option == "2fa" %}
         <div class="tab-title">

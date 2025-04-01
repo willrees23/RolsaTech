@@ -478,6 +478,17 @@ input:disabled {
 
 /* MODAL */
 
+.account-details {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    gap: 10px;
+}
+
+.account-details input {
+    font-size: 16px;
+    color: var(--bg-green);
+}
 
 img#qrcode {
     cursor: pointer;
