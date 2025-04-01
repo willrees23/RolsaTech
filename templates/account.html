@@ -1,0 +1,50 @@
+{% extends "common.html" %}
+{% block title %} Account {% endblock %}
+{% block head %}
+<style>
+    /* Selects the sidebar option which is currently active */
+    /* id$= means does the id end with... */
+    .sidebar-options a[id$='{{ option }}'] {
+        background-color: #ebebeb;
+        border-radius: 10px;
+        padding: 3px 10px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="account-container">
+    <div class="account-sidebar">
+        <div class="sidebar-title">
+            Account
+        </div>
+        <div class="sidebar-options">
+            <a id="bookings" href="/account/bookings">
+                Your bookings
+            </a>
+            <div class="sidebar-separator"></div>
+            <a id="details" href="/account/details">
+                Account details
+            </a>
+            <a id="2fa" href="/account/2fa">
+                2-factor authentication
+            </a>
+            <a href="" class="disabled hidden">FILLERFILLERFILLERFILLERFILLER</a>
+        </div>
+    </div>
+    <div class="account-content">
+        {% if option == "bookings" %}
+        <div class="tab-title">
+            BOOKINGS
+        </div>
+        {% elif option == "details" %}
+        <div class="tab-title">
+            ACCOUNT DETAILS
+        </div>
+        {% elif option == "2fa" %}
+        <div class="tab-title">
+            2-FACTOR AUTHENTICATION
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

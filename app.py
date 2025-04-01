@@ -6,6 +6,10 @@ import security
 from data import db
 from data.models import Booking, BookingType, User
 
+# store the valid routes for the account tabs
+valid_account_routes = ["bookings", "details", "2fa"]
+backup_account_route = valid_account_routes[0]
+
 # create flask instance
 # setup the database
 app = Flask(__name__)
@@ -22,6 +26,21 @@ def landing():
     if user != None:
         return render_template("landing.html", user=user)
     return render_template("landing.html")
+
+# The accounts page. Should be accessible via /account or any sub-route such as /account/hello
+# If the sub-route isn't valid, it will default to the first valid route ("bookings")
+# We pass the route to the page so it knows what to render.
+@app.route("/account")
+@app.route("/account/<string:option>")
+def account(option: str = backup_account_route):
+    user: User = session.get("user")
+    if user:
+        # Check if valid route. If not, default to "bookings".
+        if option not in valid_account_routes:
+            option = backup_account_route
+        return render_template("account.html", user=user, option=option)
+    else:
+        redirect("/login")
 
 @app.route("/logout")
 def logout():
