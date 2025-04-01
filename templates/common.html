@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <style>html { visibility: hidden; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/styles/main.css" rel="stylesheet">
     <link href="/static/styles/font.css" rel="stylesheet">
@@ -72,7 +73,7 @@
             {% if user %}
             <a href="/account">
                 <button>
-                    {{ user.username }}
+                    Hello, {{ user.username }}
                 </button>
             </a>
             {% else %}
@@ -102,37 +103,27 @@
     <div id="messages">
         <div class="card transparent">
             <div>
-                <span>
-                    Message
-                </span>
-                <ul>
                     {% for message in messages %}
-                    <li>{{ message }}</li>
+                    {{ message }}
                     {% endfor %}
-                </ul>
             </div>
         </div>
     </div>
     {% endif %}
     {% endwith %}
-    {% if error %}
-    <div id="messages">
-        <div class="card card-error">
-            <div>
-                <span>
-                    Something went wrong...
-                </span>
-                <ul>
-                    <li>
-                        {{ error }}
-                    </li>
-                </ul>
+    <div id="body">
+        
+        {% block body %}
+        {% if error %}
+        <div id="messages">
+            <div class="card card-error">
+
+                {{ error }}
+
             </div>
         </div>
-    </div>
-    {% endif %}
-    <div id="body">
-        {% block body %} {% endblock %}
+        {% endif %}
+        {% endblock %}
     </div>
     <div class="footer" id="footer">
         <div class="top-info">

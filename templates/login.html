@@ -2,6 +2,7 @@
 {% block title %} Login {% endblock %}
 {% block body %}
 <form method="post" class="form center">
+    {{ super() }}
     <span class="title">
         Login to your account
         </span>
@@ -22,4 +23,5 @@
         <button>SUBMIT</button>
     </div>
 </form>
+<img class="svg-img" src="/static/images/signin.svg">
 {% endblock %}
