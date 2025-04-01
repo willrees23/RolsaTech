@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, flash
 from flask_session import Session
+from flask_qrcode import QRcode
 import time
 
 import security
@@ -15,6 +16,7 @@ backup_account_route = valid_account_routes[0]
 app = Flask(__name__)
 app.config["SESSION_TYPE"] = "filesystem"
 
+QRcode(app)
 Session(app)
 db.setup()
 
@@ -38,9 +40,12 @@ def account(option: str = backup_account_route):
         # Check if valid route. If not, default to "bookings".
         if option not in valid_account_routes:
             return redirect("/account/bookings")
+        if option == "2fa":
+            secret_2fa = "dshfiusdhfsdiufhsdiuf"
+            return render_template("account.html", user=user, option=option, secret_2fa=secret_2fa)
         return render_template("account.html", user=user, option=option)
     else:
-        redirect("/login")
+        return redirect("/login")
 
 @app.route("/logout")
 def logout():

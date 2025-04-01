@@ -1,6 +1,7 @@
 {% extends "common.html" %}
 {% block title %} Account {% endblock %}
 {% block head %}
+<script src="/static/scripts/qr-enlarge.js"></script>
 <style>
     /* Selects the sidebar option which is currently active */
     /* id$= means does the id end with... */
@@ -36,13 +37,50 @@
         <div class="tab-title">
             BOOKINGS
         </div>
+        <div class="tab-content">
+            <span>
+                View below all of the bookings that you have scheduled.
+            </span>
+
+        </div>
         {% elif option == "details" %}
         <div class="tab-title">
             ACCOUNT DETAILS
         </div>
+        <div class="tab-content">
+            <span>
+                View below the details that are associated with your account.
+            </span>
+        </div>
         {% elif option == "2fa" %}
         <div class="tab-title">
             2-FACTOR AUTHENTICATION
+        </div>
+        <div class="tab-content">
+            <span>
+                Status: <span>
+                    DISABLED
+                </span>
+            </span>
+            <p>
+                Setup 2FA to give your account additional security.
+            </p>
+            <p>
+                To get started, scan the QR code below in any authentication app, such as Google Authenticator.
+            </p>
+            <div id="qrcode_modal" class="modal">
+                <div class="modal-content">
+                    <img src="" id="modal-image" />
+                    <button id="modal-close" class="small">Close</button>
+                </div>
+            </div>
+            <img id="qrcode" src='{{ qrcode(secret_2fa) }}'>
+            <p>Click to enlarge.</p>
+            <p>
+                Enter the code the app provides you with in the input box below.
+            </p>
+            <input name="2fa-code">
+            <button class="btn small">Submit</button>
         </div>
         {% endif %}
     </div>
