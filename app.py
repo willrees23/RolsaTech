@@ -57,6 +57,9 @@ def register():
         if email == "" or username == "" or confirm == "" or form.get("password") == "":
             error = "All fields are required."
             return render_template("register.html", error=error)
+        if '@' not in email or '.' not in email:
+            error = "A valid email is required."
+            return render_template("register.html", error=error)
         password = security.hash(request.form.get("password"))
         if not security.check(password, confirm):
             error = "Passwords do not match."
