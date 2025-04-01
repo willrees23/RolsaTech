@@ -37,7 +37,7 @@ def account(option: str = backup_account_route):
     if user:
         # Check if valid route. If not, default to "bookings".
         if option not in valid_account_routes:
-            option = backup_account_route
+            return redirect("/account/bookings")
         return render_template("account.html", user=user, option=option)
     else:
         redirect("/login")
