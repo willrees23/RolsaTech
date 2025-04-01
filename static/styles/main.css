@@ -53,6 +53,16 @@ body section {
     border-radius: 20px;
 }
 
+#body {
+    min-height: 70vh;
+}
+
+#body:has(form.center), #body:has(div.center) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 a {
     color: var(--text-primary);
     text-decoration: none;
@@ -237,6 +247,7 @@ input:disabled {
 .form span.title {
     font-size: 30px;
     font-weight: 500;
+    text-align: center;
 }
 
 .form span.subtitle {
@@ -533,8 +544,18 @@ nav.navbar .right a#number {
     border-radius: 10px;
     font-size: 16px;
     top: 35px;
+    left: -50%;
+    transform: translate(-50%, 0);
     filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.2));
 }
+
+@media (min-width: 550px) {
+    .dropdown-content {
+        left: 0px;
+        transform: none;
+    }
+}
+
 .dropdown-content a {
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
