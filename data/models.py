@@ -1,10 +1,13 @@
 from enum import Enum
 
+
 class BookingType(Enum):
     def str(self):
         return self.value
+
     CONSULTATION = "CONSULTATION"
     INSTALLATION = "INSTALLATION"
+
 
 class User:
     def __init__(self, id, email, username, password, secret_2fa):
@@ -13,6 +16,7 @@ class User:
         self.username = username
         self.password = password
         self.secret_2fa = secret_2fa
+
 
 class Booking:
     def __init__(self, id, user_id, type, date_time, location, secret):

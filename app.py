@@ -22,12 +22,14 @@ db.setup()
 
 # setup the application routes
 
+
 @app.route("/")
 def landing():
     user: User = session.get("user")
     if user != None:
         return render_template("landing.html", user=user)
     return render_template("landing.html")
+
 
 # The accounts page. Should be accessible via /account or any sub-route such as /account/hello
 # If the sub-route isn't valid, it will default to the first valid route ("bookings")
@@ -42,10 +44,13 @@ def account(option: str = backup_account_route):
             return redirect("/account/bookings")
         if option == "2fa":
             secret_2fa = "dshfiusdhfsdiufhsdiuf"
-            return render_template("account.html", user=user, option=option, secret_2fa=secret_2fa)
+            return render_template(
+                "account.html", user=user, option=option, secret_2fa=secret_2fa
+            )
         return render_template("account.html", user=user, option=option)
     else:
         return redirect("/login")
+
 
 @app.route("/logout")
 def logout():
@@ -53,6 +58,7 @@ def logout():
     if user:
         session.clear()
     return redirect("/")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -68,8 +74,9 @@ def login():
             return render_template("login.html", error=error)
         else:
             session["user"] = user
-            print("Logged in!") 
+            print("Logged in!")
     return render_template("login.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -81,7 +88,7 @@ def register():
         if email == "" or username == "" or confirm == "" or form.get("password") == "":
             error = "All fields are required."
             return render_template("register.html", error=error)
-        if '@' not in email or '.' not in email:
+        if "@" not in email or "." not in email:
             error = "A valid email is required."
             return render_template("register.html", error=error)
         password = security.hash(request.form.get("password"))
@@ -102,6 +109,7 @@ def register():
             return redirect("/")
     else:
         return render_template("register.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

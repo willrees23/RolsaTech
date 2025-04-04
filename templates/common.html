@@ -3,7 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <style>html { visibility: hidden; }</style>
+    <style>
+        html {
+            visibility: hidden;
+        }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/styles/main.css" rel="stylesheet">
     <link href="/static/styles/font.css" rel="stylesheet">
@@ -104,16 +108,16 @@
     <div id="messages">
         <div class="card transparent">
             <div>
-                    {% for message in messages %}
-                    {{ message }}
-                    {% endfor %}
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
             </div>
         </div>
     </div>
     {% endif %}
     {% endwith %}
     <div id="body">
-        
+
         {% block body %}
         {% if error %}
         <div id="messages">
