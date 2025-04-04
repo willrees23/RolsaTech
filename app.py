@@ -20,12 +20,12 @@ app = Flask(__name__)
 app.config["SESSION_TYPE"] = "filesystem"
 
 # configure mailing
-app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
-app.config['MAIL_PORT'] = 2525
-app.config['MAIL_USERNAME'] = 'c819d0c053179d'
-app.config['MAIL_PASSWORD'] = '333ecc595e01e7'
+app.config['MAIL_SERVER']='live.smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'api'
+app.config['MAIL_PASSWORD'] = '78a011865f10274929d73bc8bec94053'
 app.config['MAIL_USE_TLS'] = True
-app.config['DEBUG '] = True
+app.config['MAIL_USE_SSL'] = False
 
 
 mail = Mail(app)
@@ -63,6 +63,7 @@ def reset_password():
             user = db.get_user_by_email(email)
             message = Message(
                 subject="Password reset request",
+                sender="test@test.com",
                 recipients=[email],
             )
             message.html = "<h1>test</h1>"
