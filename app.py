@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, flash
 from flask_session import Session
 from flask_qrcode import QRcode
+from flask_mail import Mail, Message
 import time
 
 import security
@@ -14,8 +15,20 @@ backup_account_route = valid_account_routes[0]
 # create flask instance
 # setup the database
 app = Flask(__name__)
+
+# configure sessions
 app.config["SESSION_TYPE"] = "filesystem"
 
+# configure mailing
+app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = 'c819d0c053179d'
+app.config['MAIL_PASSWORD'] = '333ecc595e01e7'
+app.config['MAIL_USE_TLS'] = True
+app.config['DEBUG '] = True
+
+
+mail = Mail(app)
 QRcode(app)
 Session(app)
 db.setup()
@@ -29,6 +42,35 @@ def landing():
     if user != None:
         return render_template("landing.html", user=user)
     return render_template("landing.html")
+
+
+@app.route("/reset-password", methods=["GET", "POST"])
+def reset_password():
+    if request.method == "POST":
+        email = request.form.get("email")
+        print("got email")
+        if email == None or email == "":
+            return render_template("reset-password.html", error="An email is required.")
+        print("email valid 1")
+        if "@" not in email or "." not in email:
+            return render_template("reset-password.html", error="A valid email is required.")
+        print("email valid 2")
+        
+        flash("If it exists in our system, instructions will be sent to: " + email)
+        
+        if db.is_email_taken(email):
+            # the email is attached to an account, let's send them an email
+            user = db.get_user_by_email(email)
+            message = Message(
+                subject="Password reset request",
+                recipients=[email],
+            )
+            message.html = "<h1>test</h1>"
+            mail.send(message)
+        
+        return render_template("reset-password.html")
+    else:
+        return render_template("reset-password.html")
 
 
 # The accounts page. Should be accessible via /account or any sub-route such as /account/hello
@@ -74,7 +116,8 @@ def login():
             return render_template("login.html", error=error)
         else:
             session["user"] = user
-            print("Logged in!")
+            flash("You have been logged in. Welcome back, " + user.username)
+            return redirect("/")
     return render_template("login.html")
 
 
