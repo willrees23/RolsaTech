@@ -20,10 +20,11 @@ app = Flask(__name__)
 app.config["SESSION_TYPE"] = "filesystem"
 
 # configure mailing
-app.config['MAIL_SERVER']='live.smtp.mailtrap.io'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'api'
-app.config['MAIL_PASSWORD'] = '78a011865f10274929d73bc8bec94053'
+# Looking to send emails in production? Check out our Email API/SMTP product!
+app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 2525
+app.config['MAIL_USERNAME'] = '1347987d4a5521'
+app.config['MAIL_PASSWORD'] = '6e7c6121e1b2e1'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
@@ -48,14 +49,14 @@ def landing():
 def reset_password():
     if request.method == "POST":
         email = request.form.get("email")
-        print("got email")
+        # make sure that the email is valid
         if email == None or email == "":
             return render_template("reset-password.html", error="An email is required.")
-        print("email valid 1")
+
         if "@" not in email or "." not in email:
             return render_template("reset-password.html", error="A valid email is required.")
-        print("email valid 2")
         
+        # tell the user whats going on!
         flash("If it exists in our system, instructions will be sent to: " + email)
         
         if db.is_email_taken(email):
@@ -68,6 +69,9 @@ def reset_password():
             )
             message.html = "<h1>test</h1>"
             mail.send(message)
+
+        # we don't really want to tell users that an email has or hasn't been sent, as this gives
+        # attackers knowledge as to whether or not that email is being used for an account
         
         return render_template("reset-password.html")
     else:
@@ -98,6 +102,7 @@ def account(option: str = backup_account_route):
 @app.route("/logout")
 def logout():
     user: User = session.get("user")
+    # just clear the session and send them home
     if user:
         session.clear()
     return redirect("/")
@@ -129,6 +134,10 @@ def register():
         email = form.get("email")
         username = form.get("username")
         confirm = form.get("confirm")
+
+        # let's make sure that everything is first of all present.
+        # then we will conduct individual, more specific, validation checks.
+
         if email == "" or username == "" or confirm == "" or form.get("password") == "":
             error = "All fields are required."
             return render_template("register.html", error=error)
