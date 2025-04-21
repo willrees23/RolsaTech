@@ -3,6 +3,7 @@ from flask_session import Session
 from flask_qrcode import QRcode
 from flask_mail import Mail, Message
 import time
+import pyotp
 
 import security
 from data import db
@@ -21,12 +22,12 @@ app.config["SESSION_TYPE"] = "filesystem"
 
 # configure mailing
 # Looking to send emails in production? Check out our Email API/SMTP product!
-app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
-app.config['MAIL_PORT'] = 2525
-app.config['MAIL_USERNAME'] = '1347987d4a5521'
-app.config['MAIL_PASSWORD'] = '6e7c6121e1b2e1'
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
+app.config["MAIL_SERVER"] = "sandbox.smtp.mailtrap.io"
+app.config["MAIL_PORT"] = 2525
+app.config["MAIL_USERNAME"] = "1347987d4a5521"
+app.config["MAIL_PASSWORD"] = "6e7c6121e1b2e1"
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
 
 
 mail = Mail(app)
@@ -54,11 +55,13 @@ def reset_password():
             return render_template("reset-password.html", error="An email is required.")
 
         if "@" not in email or "." not in email:
-            return render_template("reset-password.html", error="A valid email is required.")
-        
+            return render_template(
+                "reset-password.html", error="A valid email is required."
+            )
+
         # tell the user whats going on!
         flash("If it exists in our system, instructions will be sent to: " + email)
-        
+
         if db.is_email_taken(email):
             # the email is attached to an account, let's send them an email
             user = db.get_user_by_email(email)
@@ -72,7 +75,7 @@ def reset_password():
 
         # we don't really want to tell users that an email has or hasn't been sent, as this gives
         # attackers knowledge as to whether or not that email is being used for an account
-        
+
         return render_template("reset-password.html")
     else:
         return render_template("reset-password.html")
@@ -82,21 +85,48 @@ def reset_password():
 # If the sub-route isn't valid, it will default to the first valid route ("bookings")
 # We pass the route to the page so it knows what to render.
 @app.route("/account")
-@app.route("/account/<string:option>")
+@app.route("/account/<string:option>", methods=["GET", "POST"])
 def account(option: str = backup_account_route):
     user: User = session.get("user")
-    if user:
-        # Check if valid route. If not, default to "bookings".
-        if option not in valid_account_routes:
-            return redirect("/account/bookings")
-        if option == "2fa":
-            secret_2fa = "dshfiusdhfsdiufhsdiuf"
-            return render_template(
-                "account.html", user=user, option=option, secret_2fa=secret_2fa
-            )
-        return render_template("account.html", user=user, option=option)
+    if request.method == "POST":
+        totp = pyotp.TOTP(session.get("new_2fa"))
+        db.set_secret(user.email, session.get("new_2fa"))
+        session.clear()
+        session["user"] = db.get_user_by_email(user.email)
+        return redirect("/account/2fa")
     else:
-        return redirect("/login")
+        if user:
+            # Check if valid route. If not, default to "bookings".
+            if option not in valid_account_routes:
+                return redirect("/account/bookings")
+            if option == "2fa":
+                secret_2fa = user.secret_2fa
+                if secret_2fa == None:
+                    print("how")
+                    if session.get("new_2fa"):
+                        new_2fa = session.get("new_2fa")
+                    else:
+                        new_2fa = pyotp.random_base32()
+                        session["new_2fa"] = new_2fa
+                    totp = pyotp.TOTP(new_2fa)
+                    uri = totp.provisioning_uri(name=user.email,issuer_name="Rolsa Tech")
+                    return render_template(
+                        "account.html",
+                        user=user,
+                        option=option,
+                        new_2fa=new_2fa,
+                        uri = uri
+                    )
+                print("ok")
+                return render_template(
+                    "account.html",
+                    user=user,
+                    option=option,
+                    secret_2fa = user.secret_2fa
+                )
+            return render_template("account.html", user=user, option=option)
+        else:
+            return redirect("/login")
 
 
 @app.route("/logout")

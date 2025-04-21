@@ -37,6 +37,16 @@ def setup():
     )
 
 
+def set_secret(email: str, secret: str):
+    db.execute(
+        """
+UPDATE "users" SET "2fa_secret" = ? WHERE email = ?
+""",
+        (secret, email),
+    )
+    db.commit()
+
+
 # Inserts a new user into the database and returns a User object
 def create_user(email: str, username: str, password: str) -> User:
     db.execute(

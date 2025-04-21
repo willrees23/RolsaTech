@@ -13,6 +13,17 @@
 </style>
 {% endblock %}
 {% block body %}
+
+
+<!-- The form for the 2fa code -->
+{% macro test() -%}
+<form method="post">
+    <input name="2fa-code">
+    <button type="submit" class="btn small">Submit</button>
+</form>
+{%- endmacro %}
+
+
 <div class="account-container">
     <div class="account-sidebar">
         <div class="sidebar-title">
@@ -78,6 +89,16 @@
             2-FACTOR AUTHENTICATION
         </div>
         <div class="tab-content">
+            {% if secret_2fa %}
+            <span>
+                Status: <span>
+                    ENABLED
+                </span>
+            </span>
+            <p>
+                Your account is protected with 2FA.
+            </p>
+            {% else %}
             <span>
                 Status: <span>
                     DISABLED
@@ -95,13 +116,19 @@
                     <button id="modal-close" class="small">Close</button>
                 </div>
             </div>
-            <img id="qrcode" src='{{ qrcode(secret_2fa) }}'>
+            <img id="qrcode" src='{{ qrcode(uri) }}'>
             <p>Click to enlarge.</p>
+            <p>
+                Alternatively, use the following token:
+            </p>
+            <code>
+                {{ new_2fa }}
+            </code>
             <p>
                 Enter the code the app provides you with in the input box below.
             </p>
-            <input name="2fa-code">
-            <button class="btn small">Submit</button>
+            {{ test() }}
+            {% endif %}
         </div>
         {% endif %}
     </div>
