@@ -16,10 +16,17 @@
 
 
 <!-- The form for the 2fa code -->
-{% macro test() -%}
+{% macro tfa_on() -%}
 <form method="post">
     <input name="2fa-code">
     <button type="submit" class="btn small">Submit</button>
+</form>
+{%- endmacro %}
+
+{% macro tfa_off() -%}
+<form method="post">
+    <input hidden name="2fa-code" value="disable">
+    <button type="submit" class="btn small">Disable</button>
 </form>
 {%- endmacro %}
 
@@ -98,6 +105,8 @@
             <p>
                 Your account is protected with 2FA.
             </p>
+            <p>Note that disabling 2FA leads to reduced account security.</p>
+            {{ tfa_off() }}
             {% else %}
             <span>
                 Status: <span>
@@ -127,7 +136,7 @@
             <p>
                 Enter the code the app provides you with in the input box below.
             </p>
-            {{ test() }}
+            {{ tfa_on() }}
             {% endif %}
         </div>
         {% endif %}

@@ -89,8 +89,15 @@ def reset_password():
 def account(option: str = backup_account_route):
     user: User = session.get("user")
     if request.method == "POST":
-        totp = pyotp.TOTP(session.get("new_2fa"))
-        db.set_secret(user.email, session.get("new_2fa"))
+        if request.form.get("2fa-code") == "disable":
+            db.set_secret(user.email, "")
+        else:
+            totp = pyotp.TOTP(session.get("new_2fa"))
+            if totp.verify(request.form.get("2fa-code")):
+                flash("2FA activated.")
+                db.set_secret(user.email, session.get("new_2fa"))
+            else:
+                flash("Invalid 2FA code.")
         session.clear()
         session["user"] = db.get_user_by_email(user.email)
         return redirect("/account/2fa")
@@ -100,9 +107,9 @@ def account(option: str = backup_account_route):
             if option not in valid_account_routes:
                 return redirect("/account/bookings")
             if option == "2fa":
+                # user is in the 2FA subroute
                 secret_2fa = user.secret_2fa
-                if secret_2fa == None:
-                    print("how")
+                if secret_2fa == None or secret_2fa == "":
                     if session.get("new_2fa"):
                         new_2fa = session.get("new_2fa")
                     else:
@@ -117,7 +124,6 @@ def account(option: str = backup_account_route):
                         new_2fa=new_2fa,
                         uri = uri
                     )
-                print("ok")
                 return render_template(
                     "account.html",
                     user=user,
@@ -137,6 +143,25 @@ def logout():
         session.clear()
     return redirect("/")
 
+@app.route("/login/2fa", methods=["GET", "POST"])
+def login2fa():
+    if not session.get("2fa_user"):
+        return redirect("/login")
+    
+    user = db.get_user_by_email(session.get("2fa_user"))
+    
+    if request.method == "POST":
+        form = request.form
+        code = form.get("2facode")
+        totp = pyotp.TOTP(user.secret_2fa)
+        if totp.verify(code):
+            flash("2FA successful.")
+            session.clear()
+            session["user"] = user
+            return redirect("/")
+        else:
+            flash("Incorrect 2FA code.")
+    return render_template("login2fa.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -151,9 +176,15 @@ def login():
         elif not security.check(user.password, password):
             return render_template("login.html", error=error)
         else:
-            session["user"] = user
-            flash("You have been logged in. Welcome back, " + user.username)
-            return redirect("/")
+            # check if they have 2fa active or not.
+            # if they do, send them to 2fa checking, if not, log them in
+            if user.secret_2fa == None or user.secret_2fa == "":
+                session["user"] = user
+                flash("You have been logged in. Welcome back, " + user.username)
+                return redirect("/")
+            else:
+                session["2fa_user"] = user.email 
+                return redirect("/login/2fa")
     return render_template("login.html")
 
 
