@@ -40,6 +40,10 @@
     }
 }
 
+p {
+    color: var(--text-primary);
+}
+
 body {
     margin: 0;
     padding: 0;

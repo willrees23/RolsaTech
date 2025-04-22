@@ -233,9 +233,16 @@ def consultations():
 def installations():
     pass
 
-@app.route("/services/book")
+@app.route("/services/book", methods=["GET", "POST"])
 def bookService():
-    return render_template("services/book-a-service.html")
+    user = session.get("user")
+    if request.method == "POST":
+        form = request.form
+        type = form.get("type").upper()
+        datetime = form.get("datetime")
+        location = form.get("location")
+
+    return render_template("services/book-a-service.html", user = user)
 
 if __name__ == "__main__":
     app.run(debug=True)
