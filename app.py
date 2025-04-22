@@ -225,5 +225,17 @@ def register():
         return render_template("register.html")
 
 
+@app.route("/services/consultations")
+def consultations():
+    pass
+
+@app.route("/services/installations")
+def installations():
+    pass
+
+@app.route("/services/book")
+def bookService():
+    return render_template("services/book-a-service.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
