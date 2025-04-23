@@ -1,5 +1,44 @@
 {% extends "common.html" %}
 {% block title %} Book a service {% endblock %}
 {% block body %}
-
+{% if user %}
+<form method="post" class="form center">
+    {{ super() }}
+    <span class="title">
+        Book a service
+    </span>
+    <span class="subtitle">
+        We can help you, no matter the problem.
+    </span>
+    <div class="actual-form">
+        <label>Type of service*</label>
+        <select required name="type">
+            <option value="installation">Installation</option>
+            <option value="consultation">Consultation</option>
+        </select>
+        <label>
+            Date & time for service*
+        </label>
+        <input required name="datetime" type="datetime-local">
+        <label>
+            Location (if consultation, leave empty)
+        </label>
+        <input name="location" type="text">
+        <button>Book</button>
+    </div>
+</form>
+{% else %}
+<form class="form center">
+    {{ super() }}
+    <span class="title">
+        Account required.
+    </span>
+    <span class="subtitle">
+        You must be logged in to book a service.
+    </span>
+    <div class="actual-form">
+        <a href="/login"><button type="button">Login</button></a>
+    </div>
+</form>
+{% endif %}
 {% endblock %}

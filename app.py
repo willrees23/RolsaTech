@@ -3,6 +3,7 @@ from flask_session import Session
 from flask_qrcode import QRcode
 from flask_mail import Mail, Message
 import time
+from datetime import datetime
 import pyotp
 
 import security
@@ -130,6 +131,9 @@ def account(option: str = backup_account_route):
                     option=option,
                     secret_2fa = user.secret_2fa
                 )
+            elif option == "bookings":
+                bookings = db.get_all_bookings_by_user_id(user.id)
+                return render_template("account.html", user=user, option=option, bookings=bookings)
             return render_template("account.html", user=user, option=option)
         else:
             return redirect("/login")
@@ -224,6 +228,49 @@ def register():
     else:
         return render_template("register.html")
 
+
+@app.route("/services/consultations")
+def consultations():
+    pass
+
+@app.route("/services/installations")
+def installations():
+    pass
+
+@app.route("/services/book", methods=["GET", "POST"])
+def bookService():
+    user: User = session.get("user")
+    # check if it's a form submission or not
+    if request.method == "POST":
+        # get all required data from the form
+        form = request.form
+        type = form.get("type").upper()
+        dt_str = form.get("datetime")
+        location = form.get("location")
+
+        # make sure the user has input a location if the booking type is an installation
+        if type == "INSTALLATION" and not location:
+            flash("Location is required for installations.")
+            return redirect("/services/book")
+
+        # we must make sure the date for the booking is in the future.
+        try:
+            dt = datetime.fromisoformat(dt_str)
+            now = datetime.now()
+
+            if dt >= now:
+                # it's a valid date, so let's create the booking and tell the user
+                db.create_booking(user.id, type, dt.isoformat(), location, security.generate_string())
+                flash("Booking created!")
+                return redirect("/account/bookings")
+            else:
+                flash("Invalid date/time.")
+        except (ValueError, TypeError):
+            flash("Invalid date/time.")
+        return redirect("/services/book")
+
+    # not a form submit, so just display the page!
+    return render_template("services/book-a-service.html", user = user)
 
 if __name__ == "__main__":
     app.run(debug=True)
