@@ -64,7 +64,35 @@
             <span>
                 View below all of the bookings that you have scheduled.
             </span>
-
+            {% if bookings %}
+            {% for b in bookings %}
+            <div style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="card transparent">
+                    <div class="card-info">
+                        <span>
+                            {{ b.type }}
+                        </span>
+                        <div class="card-title">
+                            {{ b.date_time }}
+                        </div>
+                        <div class="card-description">
+                            {% if b.location %}
+                            LOCATION: {{ b.location }}
+                            {% else %}
+                            Consultations are conducted online.
+                            {% endif %}
+                        </div>
+                        <div>
+                            <img src="{{ qrcode(b.secret, box_size=3) }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p></p>
+            {% endif %}
+            <a href="/services/book"><button class="small">Make a booking</button></a>
         </div>
         {% elif option == "details" %}
         <div class="tab-title">
