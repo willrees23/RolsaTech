@@ -1,0 +1,21 @@
+{% extends "common.html" %}
+{% block title %} Login {% endblock %}
+{% block body %}
+<form method="post" class="form center">
+    {{ super() }}
+    <span class="title">
+        Login to your account
+    </span>
+    <span class="subtitle">
+        Please enter your two-factor authentication code below.
+    </span>
+    <div class="actual-form">
+        <label>
+            2FA Code
+        </label>
+        <input placeholder="2FA Code..." name="2facode">
+        <button>SUBMIT</button>
+    </div>
+</form>
+<img class="svg-img" src="/static/images/signin.svg">
+{% endblock %}

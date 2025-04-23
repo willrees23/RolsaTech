@@ -3,11 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
+    <style>
+        html {
+            visibility: hidden;
+        }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/styles/main.css" rel="stylesheet">
     <link href="/static/styles/font.css" rel="stylesheet">
     <script src="/static/scripts/form-submit.js"></script>
     <title>Rolsa Tech - {% block title %} {% endblock %}</title>
+    {% block head %} {% endblock %}
 </head>
 
 <body>
@@ -71,8 +77,8 @@
             </a>
             {% if user %}
             <a href="/account">
-                <button>
-                    {{ user.username }}
+                <button title="Account">
+                    Hello, {{ user.username }}
                 </button>
             </a>
             {% else %}
@@ -97,22 +103,32 @@
     </div>
     {% block no_pad %}
     {% endblock %}
-    {% if error %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
     <div id="messages">
-        <div class="card card-error">
+        <div class="card transparent">
             <div>
-                <span>
-                    Something went wrong...
-                </span>
-                <span>
-                    {{ error }}
-                </span>
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
             </div>
         </div>
     </div>
     {% endif %}
+    {% endwith %}
     <div id="body">
-        {% block body %} {% endblock %}
+
+        {% block body %}
+        {% if error %}
+        <div id="messages">
+            <div class="card card-error">
+
+                {{ error }}
+
+            </div>
+        </div>
+        {% endif %}
+        {% endblock %}
     </div>
     <div class="footer" id="footer">
         <div class="top-info">

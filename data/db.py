@@ -36,25 +36,42 @@ def setup():
         """
     )
 
+
+def set_secret(email: str, secret: str):
+    db.execute(
+        """
+UPDATE "users" SET "2fa_secret" = ? WHERE email = ?
+""",
+        (secret, email),
+    )
+    db.commit()
+
+
 # Inserts a new user into the database and returns a User object
 def create_user(email: str, username: str, password: str) -> User:
-    db.execute("""
+    db.execute(
+        """
                INSERT INTO "users" (email,username,password) VALUES (?,?,?)
-               """, (email, username, password))
+               """,
+        (email, username, password),
+    )
     db.commit()
     # Get the last row that was inserted and get it's ID.
     id = db.cursor().lastrowid
     return User(id, email, username, password, "")
+
 
 def is_email_taken(email: str) -> bool:
     cursor = db.cursor()
     cursor.execute("SELECT * FROM 'users' WHERE email = ?", (email,))
     return cursor.fetchone() != None
 
+
 def is_username_taken(username: str) -> bool:
     cursor = db.cursor()
     cursor.execute("SELECT * FROM 'users' WHERE username = ?", (username,))
     return cursor.fetchone() != None
+
 
 # Retreives a user from the database using the ID
 def get_user_by_id(id: int):
@@ -62,6 +79,7 @@ def get_user_by_id(id: int):
     cursor.execute("SELECT * FROM 'users' WHERE id = ?", (id,))
     row = cursor.fetchone()
     return User(*row)
+
 
 # Retreives a user from the database using either the username or email.
 # First tries to get via email, if it fails, it will try using the username.
@@ -72,7 +90,7 @@ def get_user_by_emailusername(emailusername: str):
             return by_email
     except:
         pass
-    
+
     try:
         by_username = get_user_by_username(emailusername)
         return by_username
@@ -80,12 +98,14 @@ def get_user_by_emailusername(emailusername: str):
         pass
     return None
 
+
 # Retreives a user from the database using the email.
 def get_user_by_email(email: str):
     cursor = db.cursor()
     cursor.execute("SELECT * FROM 'users' WHERE email = ?", (email,))
     row = cursor.fetchone()
     return User(*row)
+
 
 # Retreives a user from the database using the email.
 def get_user_by_username(username: str):
@@ -97,15 +117,20 @@ def get_user_by_username(username: str):
 
 ### Booking related functions ###
 
+
 # Inserts a new booking entry into the database
 def create_booking(user_id, type, date_time, location, secret) -> Booking:
-    db.execute("""
+    db.execute(
+        """
                INSERT INTO "bookings" (user_id,type,date_time,location,secret) VALUES (?,?,?,?,?)
-               """, (user_id, type, date_time, location, secret))
+               """,
+        (user_id, type, date_time, location, secret),
+    )
     db.commit()
     # Get the last row that was inserted and get it's ID.
     id = db.cursor().lastrowid
     return Booking(id, user_id, type, date_time, location, secret)
+
 
 # Retreives a booking from the database using the ID.
 def get_booking_by_id(id) -> Booking:
@@ -114,12 +139,14 @@ def get_booking_by_id(id) -> Booking:
     row = cursor.fetchone()
     return Booking(*row)
 
+
 # Retreives a booking from the database using the user ID
 def get_booking_by_user_id(user_id) -> Booking:
     cursor = db.cursor()
     cursor.execute("SELECT * FROM 'bookings' WHERE user_id = ?", (user_id,))
     row = cursor.fetchone()
     return Booking(*row)
+
 
 # Retreives all the bookings from the database using the user ID
 def get_all_bookings_by_user_id(user_id) -> list[Booking]:

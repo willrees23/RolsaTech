@@ -1,13 +1,14 @@
 {% extends "common.html" %}
 {% block title %} Login {% endblock %}
 {% block body %}
-<div class="form">
+<form method="post" class="form center">
+    {{ super() }}
     <span class="title">
         Login to your account
-        </span>
+    </span>
     <span class="subtitle">
-    Don't have an account? <a class="underline" href="/register">Register here</a></span>
-    <form method="post">
+        Don't have an account? <a class="underline" href="/register">Register here</a></span>
+    <div class="actual-form">
         <label>
             Email/Username
         </label>
@@ -20,6 +21,7 @@
             Forgot your password? <a class="underline" href="/reset-password">Reset it here</a>
         </span>
         <button>SUBMIT</button>
-    </form>
-</div>
+    </div>
+</form>
+<img class="svg-img" src="/static/images/signin.svg">
 {% endblock %}

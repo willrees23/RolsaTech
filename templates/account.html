@@ -1,0 +1,145 @@
+{% extends "common.html" %}
+{% block title %} Account {% endblock %}
+{% block head %}
+<script src="/static/scripts/qr-enlarge.js"></script>
+<style>
+    /* Selects the sidebar option which is currently active */
+    /* id$= means does the id end with... */
+    .sidebar-options a[id$='{{ option }}'] {
+        background-color: #ebebeb;
+        border-radius: 10px;
+        padding: 3px 10px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+
+
+<!-- The form for the 2fa code -->
+{% macro tfa_on() -%}
+<form method="post">
+    <input name="2fa-code">
+    <button type="submit" class="btn small">Submit</button>
+</form>
+{%- endmacro %}
+
+{% macro tfa_off() -%}
+<form method="post">
+    <input hidden name="2fa-code" value="disable">
+    <button type="submit" class="btn small">Disable</button>
+</form>
+{%- endmacro %}
+
+
+<div class="account-container">
+    <div class="account-sidebar">
+        <div class="sidebar-title">
+            Account
+        </div>
+        <div class="sidebar-options">
+            <a id="bookings" href="/account/bookings">
+                Your bookings
+            </a>
+            <div class="sidebar-separator"></div>
+            <a id="details" href="/account/details">
+                Account details
+            </a>
+            <a id="2fa" href="/account/2fa">
+                2-factor authentication
+            </a>
+            <div class="sidebar-separator"></div>
+            <a href="/logout" style="display: flex; gap: 5px; align-items: center;">
+                <img src="/static/log-out.svg">
+                Logout
+            </a>
+            <a href="" class="disabled hidden">FILLERFILLERFILLERFILLERFILLER</a>
+        </div>
+    </div>
+    <div class="account-content">
+        {% if option == "bookings" %}
+        <div class="tab-title">
+            BOOKINGS
+        </div>
+        <div class="tab-content">
+            <span>
+                View below all of the bookings that you have scheduled.
+            </span>
+
+        </div>
+        {% elif option == "details" %}
+        <div class="tab-title">
+            ACCOUNT DETAILS
+        </div>
+        <div class="tab-content">
+            <p>View below the details that are associated with your account.
+            </p>
+            <div class="account-details">
+                <label>
+                    Email Address
+                </label>
+                <input value="{{ user.email }}" disabled>
+                <label>
+                    Username
+                </label>
+                <input value="{{ user.username }}" disabled>
+                <label>
+                    Password
+                </label>
+                <input value="Nope.............." disabled type="password">
+                <span>
+                    Need to reset? <a class="underline" href="/reset-password">Reset password</a>
+                </span>
+            </div>
+        </div>
+        {% elif option == "2fa" %}
+        <div class="tab-title">
+            2-FACTOR AUTHENTICATION
+        </div>
+        <div class="tab-content">
+            {% if secret_2fa %}
+            <span>
+                Status: <span>
+                    ENABLED
+                </span>
+            </span>
+            <p>
+                Your account is protected with 2FA.
+            </p>
+            <p>Note that disabling 2FA leads to reduced account security.</p>
+            {{ tfa_off() }}
+            {% else %}
+            <span>
+                Status: <span>
+                    DISABLED
+                </span>
+            </span>
+            <p>
+                Setup 2FA to give your account additional security.
+            </p>
+            <p>
+                To get started, scan the QR code below in any authentication app, such as Google Authenticator.
+            </p>
+            <div id="qrcode_modal" class="modal">
+                <div class="modal-content">
+                    <img src="" id="modal-image" />
+                    <button id="modal-close" class="small">Close</button>
+                </div>
+            </div>
+            <img id="qrcode" src='{{ qrcode(uri) }}'>
+            <p>Click to enlarge.</p>
+            <p>
+                Alternatively, use the following token:
+            </p>
+            <code>
+                {{ new_2fa }}
+            </code>
+            <p>
+                Enter the code the app provides you with in the input box below.
+            </p>
+            {{ tfa_on() }}
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
