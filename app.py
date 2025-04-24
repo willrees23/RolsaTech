@@ -229,13 +229,9 @@ def register():
         return render_template("register.html")
 
 
-@app.route("/services/consultations")
-def consultations():
-    pass
-
-@app.route("/services/installations")
-def installations():
-    pass
+############
+# SERVICES #
+############
 
 @app.route("/services/book", methods=["GET", "POST"])
 def bookService():
@@ -271,6 +267,35 @@ def bookService():
 
     # not a form submit, so just display the page!
     return render_template("services/book-a-service.html", user = user)
+
+
+
+# static page routes
+@app.route("/services/consultations")
+def consultations():
+    user: User = session.get("user")
+    return render_template("services/consultations.html", user = user)
+
+@app.route("/services/installations")
+def installations():
+    user: User = session.get("user")
+    return render_template("services/installations.html", user = user)
+
+@app.route("/information/about-green-energy")
+def INFO_green_energy():
+    user: User = session.get("user")
+    return render_template("information/about-green-energy.html", user = user)
+
+@app.route("/information/green-energy-products")
+def INFO_green_prodcuts():
+    user: User = session.get("user")
+    return render_template("information/green-energy-products.html", user = user)
+
+@app.route("/information/reducing-carbon-footprint")
+def INFO_carbon_footprint():
+    user: User = session.get("user")
+    return render_template("information/reducing-carbon-footprint.html", user = user)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

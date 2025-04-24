@@ -4,6 +4,16 @@
 /* #164707 is the text colour */
 /* Symbols found at https://css.gg/ */
 
+* {
+    color: var(--text-primary);
+}
+
+h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+
 :root {
     --card-green: #C1DEB8;
     --bg-green: #456C39;
@@ -75,6 +85,11 @@ body section {
 a {
     color: var(--text-primary);
     text-decoration: none;
+}
+
+a.link {
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 span.center {
