@@ -1,5 +1,41 @@
-{% extends "common.html" %}
-{% block title %} Carbon footprint calculator {% endblock %}
-{% block body %}
-
+{% extends "common.html" %} {% block title %} Carbon footprint calculator {%
+endblock %} {% block head %} {% endblock %} {% block body %}
+<section>
+  <!-- Elfsight Calculator | Untitled Calculator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.2.10/iframeResizer.min.js"></script>
+  <iframe
+    onload="iFrameResize(this)"
+    src="https://b7f2f1949835414ebc2ed071edb66c53.elf.site"
+    style="border: none; width: 100%"
+  ></iframe>
+</section>
+<section>
+  <!-- Arbor's Carbon Equivalent Calculator: https://www.arbor.eco/carbon-equivalent-calculator -->
+  <div
+    style="width: 100%; position: relative; margin: 0 auto; overflow: hidden"
+  >
+    <iframe
+      src="https://www.arbor.eco/tool/carbon-equivalent-calculator?id=146786634"
+      width="100%"
+      height="864px"
+      style="border: none; display: block"
+      title="Arbor Carbon Equivalent Calculator"
+    ></iframe>
+    <div
+      style="font-family: 'Manrope', sans-serif; font-size: 14px; color: #abbab7; height: 32px; margin-top: -96px; line-height: 130%; text-align: right; position: relative; z-index: 2; width: 75%; float: right; display: flex; align-items: center; justify-content: flex-end; right; padding: 16px;"
+    >
+      <a
+        href="https://www.arbor.eco/carbon-equivalent-calculator"
+        style="color: #abbab7; text-decoration: none"
+        >Carbon Equivalent Calculator</a
+      >
+      <span style="margin: 0 3px">by</span>
+      <a
+        href="https://www.arbor.eco/"
+        style="color: #0e6655; text-decoration: none"
+        >Arbor</a
+      >
+    </div>
+  </div>
+</section>
 {% endblock %}
