@@ -269,6 +269,11 @@ def bookService():
     return render_template("services/book-a-service.html", user = user)
 
 
+@app.route("/calculators/footprint")
+def CALC_footprint():
+    user: User = session.get("user")
+    return render_template("calculators/carbon-footprint.html", user = user)
+
 
 # static page routes
 @app.route("/services/consultations")
